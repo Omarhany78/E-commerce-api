@@ -1,0 +1,456 @@
+openapi: 3.0.0
+info:
+  title: E-commerce Api
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+tags:
+  - name: Auth
+  - name: User
+  - name: Product
+  - name: Review
+  - name: Order
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Omar
+                email: omar@gmail.com
+                password: "12345678"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: omar@gmail.com
+                password: "12345678"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/logout:
+    get:
+      tags:
+        - Auth
+      summary: Logout User
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /:
+    get:
+      tags:
+        - Auth
+      summary: Home Page
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /users:
+    get:
+      tags:
+        - User
+      summary: Get All Users
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /users/showMe:
+    get:
+      tags:
+        - User
+      summary: Show Current User
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{userId}:
+    get:
+      tags:
+        - User
+      summary: Get Single User by Postman ID
+      description: Retrieve a single user using their unique Postman ID.
+      parameters:
+        - name: userId
+          in: path
+          description: The unique ID of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique Postman ID of the user
+                  name:
+                    type: string
+                    description: The name of the user
+                  email:
+                    type: string
+                    description: The email of the user
+  /users/updateUser:
+    patch:
+      tags:
+        - User
+      summary: Update User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ahmed
+                email: ahmed@gmail.com
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /users/updateUserPassword:
+    patch:
+      tags:
+        - User
+      summary: Update User Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                oldPassword: "12345678"
+                newPassword: secretPassword$$$
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /products:
+    get:
+      tags:
+        - Product
+      summary: Get All Products
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Product
+      summary: Create Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: accent chair
+                price: 25999
+                image: >-
+                  https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160
+                colors:
+                  - "#ff0000"
+                  - "#00ff00"
+                  - "#0000ff"
+                company: marcos
+                description: >-
+                  Cloud bread VHS hell of banjo bicycle rights jianbing umami
+                  mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr
+                  dreamcatcher waistcoat, authentic chillwave trust fund. Viral
+                  typewriter fingerstache pinterest pork belly narwhal. Schlitz
+                  venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki
+                  trust fund hashtag kinfolk microdosing gochujang live-edge
+                category: office
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /products/{productId}:
+    get:
+      tags:
+        - Product
+      summary: Get Single Product by Postman ID
+      description: Retrieve a single product using its unique Postman ID.
+      parameters:
+        - name: productId
+          in: path
+          description: The unique Postman ID of the product
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique Postman ID of the product
+                  name:
+                    type: string
+                    description: The name of the product
+                  price:
+                    type: number
+                    format: float
+                    description: The price of the product
+                  description:
+                    type: string
+                    description: The description of the product
+
+    patch:
+      tags:
+        - Product
+      summary: Update Product by Postman ID
+      description: Update the details of a product using its unique Postman ID.
+      parameters:
+        - name: productId
+          in: path
+          description: The unique Postman ID of the product to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The updated product details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The updated name of the product
+                price:
+                  type: number
+                  format: float
+                  description: The updated price of the product
+                description:
+                  type: string
+                  description: The updated description of the product
+              example:
+                name: Updated product name
+                price: 29.99
+                description: Updated description of the product
+    responses:
+      "200":
+        description: Product successfully updated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Whether the product was successfully updated
+
+    delete:
+      tags:
+        - Product
+      summary: Delete Product by Postman ID
+      description: Delete a product using its unique Postman ID.
+      parameters:
+        - name: productId
+          in: path
+          description: The unique Postman ID of the product to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the product was successfully deleted
+
+  /products/uploadImage:
+    post:
+      tags:
+        - Product
+      summary: Upload Image
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /reviews:
+    get:
+      tags:
+        - Review
+      summary: Get All Reviews
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Review
+      summary: Create Review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                product: 674243e81a79b17b09cc7af3
+                comment: This sofa is cool by moaaz
+                title: sofa review by moaaz
+                rating: 4
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /reviews/postmanId:
+    get:
+      tags:
+        - Review
+      summary: Get Single Review
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Review
+      summary: Update Review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                rating: 4
+                title: armchair review updated
+                comemnt: this armchair is cool
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Review
+      summary: Delete Review
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /orders:
+    post:
+      tags:
+        - Order
+      summary: Create Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tax: 399
+                shippingFee: 499
+                items:
+                  - amount: 34
+                    product: 6744d18823d9c0174e44ba50
+                  - amount: 34
+                    product: 6744d1b423d9c0174e44ba52
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Order
+      summary: Get All Orders
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /orders/showAllMyOrders:
+    get:
+      tags:
+        - Order
+      summary: Get Current User Orders
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /orders/postmanId:
+    get:
+      tags:
+        - Order
+      summary: Get Single Order
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Order
+      summary: Update Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                paymentId: "635275"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
