@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 
 app.delete("/api/v1/delete", deleteEveryThing);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/index.html", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/products", authenticateUser, productRouter);
