@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swagger UI</title>
+  <!-- Import Swagger UI CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.19.0/swagger-ui.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #swagger-ui {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container for Swagger UI -->
+  <div id="swagger-ui"></div>
+
+  <!-- Import Swagger UI JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.19.0/swagger-ui-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.19.0/swagger-ui-standalone-preset.js"></script>
+
+  <script>
+    // Initialize Swagger UI
+    window.onload = () => {
+      SwaggerUIBundle({
+        url: '/api-docs', // Path to your Swagger JSON file
+        dom_id: '#swagger-ui',
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+      });
+    };
+  </script>
+</body>
+</html>
