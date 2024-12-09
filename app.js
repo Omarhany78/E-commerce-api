@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
 
 app.delete("/api/v1/delete", deleteEveryThing);
 
+app.use('/swagger.yaml', express.static(path.join(__dirname, 'swagger.yaml')));
 app.use("/index.html", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
